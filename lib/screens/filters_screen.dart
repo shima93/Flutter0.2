@@ -5,6 +5,10 @@ import '../widgets/main_drawer.dart';
 class FiltersScreen extends StatefulWidget {
   static const routeName = '/filters';
 
+  final Function saveFilters;
+
+  FiltersScreen(this.saveFilters);
+
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
 }
@@ -28,7 +32,12 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Your Filtera')),
+        appBar: AppBar(
+          title: Text('Your Filtera'),
+          actions: <Widget>[
+            IconButton(onPressed: widget.saveFilters, icon: Icon(Icons.save))
+          ],
+        ),
         drawer: MainDrawer(),
         body: Column(
           children: <Widget>[
