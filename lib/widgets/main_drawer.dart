@@ -12,9 +12,10 @@ class MainDrawer extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-            fontFamily: 'RobotoCondensed',
-            fontSize: 23,
-            fontWeight: FontWeight.bold),
+          fontFamily: 'RobotoCondensed',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       onTap: tapHandler,
     );
@@ -30,21 +31,24 @@ class MainDrawer extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(20),
             alignment: Alignment.centerLeft,
-            color: Theme.of(context).canvasColor,
+            color: Theme.of(context).accentColor,
             child: Text(
               'Cooking Up!',
-              style: TextStyle(fontWeight: FontWeight.w900),
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 30,
+                  color: Theme.of(context).primaryColor),
             ),
           ),
           SizedBox(
             height: 20,
           ),
-          buildListTile('Meals', Icons.restaurant_outlined, () {
+          buildListTile('Meals', Icons.restaurant, () {
             Navigator.of(context).pushReplacementNamed('/');
           }),
-          buildListTile('Settings', Icons.settings, () {
+          buildListTile('Filters', Icons.settings, () {
             Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
-          })
+          }),
         ],
       ),
     );

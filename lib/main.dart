@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/dummy_data.dart';
 
-import './screens/filters_screen.dart';
+import './dummy_data.dart';
 import './screens/tabs_screen.dart';
-import 'screens/meal_detail_screen.dart';
+import './screens/meal_detail_screen.dart';
 import './screens/category_meals_screen.dart';
+import './screens/filters_screen.dart';
 import './screens/categories_screen.dart';
 import './models/meal.dart';
 
@@ -12,7 +12,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -20,13 +20,15 @@ class _MyAppState extends State<MyApp> {
     'gluten': false,
     'lactose': false,
     'vegan': false,
-    'vegeterian': false
+    'vegetarian': false,
   };
   List<Meal> _availableMeals = DUMMY_MEALS;
   List<Meal> _favoriteMeals = [];
+
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
+
       _availableMeals = DUMMY_MEALS.where((meal) {
         if (_filters['gluten'] && !meal.isGlutenFree) {
           return false;
@@ -54,8 +56,9 @@ class _MyAppState extends State<MyApp> {
       });
     } else {
       setState(() {
-        _availableMeals
-            .add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+        _favoriteMeals.add(
+          DUMMY_MEALS.firstWhere((meal) => meal.id == mealId),
+        );
       });
     }
   }
@@ -94,15 +97,21 @@ class _MyAppState extends State<MyApp> {
             CategoryMealsScreen(_availableMeals),
         MealDetailScreen.routeName: (ctx) =>
             MealDetailScreen(_toggleFavorite, _isMealFavorite),
-        FiltersScreen.routeName: (ctx) => FiltersScreen(_setFilters),
+        FiltersScreen.routeName: (ctx) => FiltersScreen(_filters, _setFilters),
       },
-      // onGenerateRoute: (settings){
-      //   print(settings.arguments);
-      //   return MaterialPageRoute(builder: (ctx)=> CategoryMealsScreen())
-      // }
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        // if (settings.name == '/meal-detail') {
+        //   return ...;
+        // } else if (settings.name == '/something-else') {
+        //   return ...;
+        // }
+        // return MaterialPageRoute(builder: (ctx) => CategoriesScreen(),);
+      },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-            builder: (ctx) => CategoryMealsScreen(_availableMeals));
+          builder: (ctx) => CategoriesScreen(),
+        );
       },
     );
   }
