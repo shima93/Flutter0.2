@@ -35,7 +35,17 @@ class _FiltersScreenState extends State<FiltersScreen> {
         appBar: AppBar(
           title: Text('Your Filtera'),
           actions: <Widget>[
-            IconButton(onPressed: widget.saveFilters, icon: Icon(Icons.save))
+            IconButton(
+                onPressed: () {
+                  final selectedFilters = {
+                    'gluten': _glutenFree,
+                    'lactose': _lactoseFree,
+                    'vegan': _vegan,
+                    'vegeterian': _vegeterian
+                  };
+                  widget.saveFilters(selectedFilters);
+                },
+                icon: Icon(Icons.save))
           ],
         ),
         drawer: MainDrawer(),
